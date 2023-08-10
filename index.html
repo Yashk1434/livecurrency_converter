@@ -1,0 +1,39 @@
+<html>
+<head>
+	<title>INR to USD by Yash</title>
+
+	<style>
+		* {font-size: 130%;}
+		h1 { background-color: black; color: white; width: 50%; border-radius: 30px; }
+		body { background-color: lavender; }
+		input { border-radius: 30px; }
+	</style>
+	<script>
+		function convert(){
+			event.preventDefault();
+			let ans = document.getElementById("ans");
+			let amt = parseFloat(document.getElementById("amt").value); 
+			let url = "https://api.exchangerate-api.com/v4/latest/USD";
+			fetch(url)
+			.then(res => res.json())
+			.then(data => {
+				let dollar = data.rates.INR; 
+				let answer = dollar * amt;
+				ans.innerHTML = "\u20B9" + answer.toFixed(2);
+			})
+			.catch(err => ans.innerHTML = "Issue: " + err);
+		}
+	</script>
+</head>
+<body>
+	<center>
+		<h1>Live CC App</h1>
+		<form onsubmit="convert()">
+			<input type="number" step="any" placeholder="Enter Amount" id="amt" />
+			<br><br>
+			<input type="submit" value="Convert" />
+		</form>
+		<h1 id="ans"> </h1>
+	</center>
+</body>
+</html>
